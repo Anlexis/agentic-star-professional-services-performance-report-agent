@@ -1,0 +1,25 @@
+# Runtime parameters — loaded by the registry and passed as Graph(config=...).
+# Separate from config/agent.yaml, which is the static manifest.
+#
+# Every value below is validated once in src/services/runtime_settings.py and
+# then forwarded to the pipeline. A value that is absent, mistyped, non-finite or
+# out of range falls back to the built-in floor declared in that module.
+
+max_retry: 3
+timeout_s: 30
+
+# Analysis parameters, forwarded to the inner workflow graph.
+# target_utilization: the utilisation rate the report measures against when the
+# request supplies no kpis.target_utilization of its own. Range 0..1; changing
+# it changes the "exceeds / falls short of the target by N points" sentence.
+analysis:
+  target_utilization: 0.85
+
+# Report tuning, forwarded to the inner workflow graph.
+# pipeline_health_threshold: the pipeline coverage ratio at or above which the
+# trend commentary reads "healthy" rather than "moderate". Range 0..100.
+# max_visualizations: cap on the visualisation recommendations rendered, 1..10.
+# Lowering it visibly shortens the Recommended Visualisations section.
+report:
+  pipeline_health_threshold: 2.0
+  max_visualizations: 3
